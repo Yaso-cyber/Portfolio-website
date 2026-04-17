@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Website</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        a {
+            color: crimson;
+        }
+    </style>
+</head>
+<body class="smooth-scroll">
+    <nav class="fixed top-0 left-0 w-full glass p-4 flex justify-between">
+        <div>
+            <a href="#hero" class="px-4">Home</a>
+            <a href="#origin" class="px-4">Origin Story</a>
+            <a href="#projects" class="px-4">Projects</a>
+            <a href="#newsletter" class="px-4">Newsletter</a>
+        </div>
+        <div>
+            <button id="lang-toggle" class="bg-crimson text-white rounded p-2">EN</button>
+        </div>
+    </nav>
+    <section id="hero" class="h-screen flex items-center justify-center">
+        <div class="text-center">
+            <h1 class="text-5xl font-bold">Bridging Criminology and AI Governance</h1>
+            <p class="mt-4 text-xl">Our mission is to integrate criminological insights with advanced AI governance processes.</p>
+        </div>
+    </section>
+    <section id="origin" class="py-20 bg-gray-800">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-semibold text-center">Origin Story</h2>
+            <p class="mt-4">Transitioning from Criminology to Cybersecurity, I bring a unique perspective to the forefront of AI Law and Governance.</p>
+        </div>
+    </section>
+    <section id="projects" class="py-20">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-semibold text-center">Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Project items go here -->
+            </div>
+        </div>
+    </section>
+    <section id="newsletter" class="py-20 bg-gray-800">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-semibold">Subscribe to Research Weekly</h2>
+            <p>Get insights into AI Law and Forensic technology.</p>
+            <form class="mt-4">
+                <input type="email" placeholder="Your email" class="p-2 rounded" required>
+                <button type="submit" class="bg-crimson text-white p-2 rounded">Subscribe</button>
+            </form>
+        </div>
+    </section>
+    <script>
+        const toggleButton = document.getElementById('lang-toggle');
+        toggleButton.addEventListener('click', function() {
+            if (toggleButton.textContent === 'EN') {
+                toggleButton.textContent = 'ES';
+            } else {
+                toggleButton.textContent = 'EN';
+            }
+        });
+    </script>
+</body>
+</html>
