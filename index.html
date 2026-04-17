@@ -1,75 +1,899 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Website</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI.CLOUD.GRC | Integrary by Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
     <style>
+        :root {
+            --bg: #080b14;
+            --bg-soft: #0f1425;
+            --surface: rgba(14, 20, 36, 0.7);
+            --surface-2: rgba(12, 17, 31, 0.82);
+            --text-main: #ebf3ff;
+            --text-muted: #a9b6d0;
+            --line: rgba(127, 154, 214, 0.08);
+            --line-soft: rgba(127, 154, 214, 0.02);
+            --neon-cyan: #29d9ff;
+            --neon-pink: #ff5cae;
+            --neon-gold: #ffd87a;
+            --radius-xl: 26px;
+            --radius-lg: 18px;
+            --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y proximity;
+        }
+
         body {
-            background-color: #0a0a0a;
-            color: #ffffff;
+            min-height: 100vh;
+            font-family: "Manrope", sans-serif;
+            color: var(--text-main);
+            background:
+                radial-gradient(48rem 48rem at 0% 10%, rgba(41, 217, 255, 0.1), transparent 60%),
+                radial-gradient(36rem 36rem at 100% 0%, rgba(255, 92, 174, 0.08), transparent 60%),
+                linear-gradient(166deg, #06080f 0%, #0c1221 48%, #0b1120 100%);
+            overflow-x: hidden;
         }
-        .glass {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+
+        body[dir="rtl"] {
+            font-family: "Tajawal", sans-serif;
         }
-        a {
-            color: crimson;
+
+        .ambient-grid {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 42px 42px;
+            mask-image: radial-gradient(circle at center, black 35%, transparent 100%);
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(2px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.35;
+        }
+
+        .orb-cyan {
+            width: 280px;
+            height: 280px;
+            left: -80px;
+            top: 20%;
+            background: radial-gradient(circle, rgba(41, 217, 255, 0.48), transparent 68%);
+            animation: float-cyan 14s ease-in-out infinite alternate;
+        }
+
+        .orb-pink {
+            width: 300px;
+            height: 300px;
+            right: -100px;
+            top: 55%;
+            background: radial-gradient(circle, rgba(255, 92, 174, 0.46), transparent 66%);
+            animation: float-pink 16s ease-in-out infinite alternate;
+        }
+
+        @keyframes float-cyan {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(35px, -30px) scale(1.08); }
+            100% { transform: translate(60px, 20px) scale(0.96); }
+        }
+
+        @keyframes float-pink {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-20px, 28px) scale(1.06); }
+            100% { transform: translate(-58px, -18px) scale(0.94); }
+        }
+
+        .wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 0 1.2rem 2rem;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 10px;
+            z-index: 45;
+            margin: 0.9rem auto 1.2rem;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            backdrop-filter: blur(16px);
+            background: rgba(8, 12, 23, 0.72);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.72rem 1rem;
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.05;
+            letter-spacing: 0.03em;
+        }
+
+        .brand-main {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .brand-main .dot-cyan {
+            color: var(--neon-cyan);
+        }
+
+        .brand-main .dot-pink {
+            color: var(--neon-pink);
+        }
+
+        .brand-sub {
+            font-size: 0.57rem;
+            color: var(--text-muted);
+            margin-top: 0.1rem;
+            letter-spacing: 0.13em;
+        }
+
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: var(--text-muted);
+            padding: 0.46rem 0.7rem;
+            border-radius: 999px;
+            transition: 220ms ease;
+            font-size: 0.88rem;
+            border: 1px solid transparent;
+        }
+
+        .menu a:hover,
+        .menu a:focus-visible {
+            color: var(--text-main);
+            border-color: var(--line);
+            background: rgba(127, 154, 214, 0.12);
+            outline: none;
+        }
+
+        .lang-controls {
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        .lang-btn {
+            border: 1px solid var(--line);
+            background: rgba(14, 20, 34, 0.9);
+            color: var(--text-main);
+            border-radius: 999px;
+            padding: 0.42rem 0.72rem;
+            font-weight: 700;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: 200ms ease;
+        }
+
+        .lang-btn:hover,
+        .lang-btn:focus-visible,
+        .lang-btn.active {
+            transform: translateY(-1px);
+            border-color: rgba(41, 217, 255, 0.62);
+            box-shadow: 0 0 0 3px rgba(41, 217, 255, 0.14);
+            outline: none;
+        }
+
+        section {
+            scroll-snap-align: start;
+            scroll-margin-top: 98px;
+            margin-bottom: 0;
+        }
+
+        .hero {
+            min-height: 72vh;
+            border: 1px solid transparent;
+            border-radius: var(--radius-xl);
+            padding: clamp(1.4rem, 4vw, 2.8rem);
+            background: linear-gradient(145deg, rgba(10, 17, 31, 0.9), rgba(17, 23, 39, 0.64));
+            display: grid;
+            align-items: center;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 1.2rem;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.015), 0 10px 30px rgba(0, 0, 0, 0.16);
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(130deg, transparent 40%, rgba(255, 92, 174, 0.06), transparent 72%);
+        }
+
+        .tag {
+            width: fit-content;
+            font-size: 0.75rem;
+            border: 1px solid rgba(41, 217, 255, 0.45);
+            border-radius: 999px;
+            color: var(--neon-cyan);
+            padding: 0.45rem 0.82rem;
+            margin-bottom: 0.9rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.9rem);
+            line-height: 1.08;
+            max-width: 20ch;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            max-width: 58ch;
+            line-height: 1.75;
+        }
+
+        .hero-card {
+            border: 1px solid transparent;
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+            background: rgba(18, 24, 40, 0.52);
+            max-height: 360px;
+            overflow: auto;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+        }
+
+        .hero-card h3 {
+            margin-bottom: 0.6rem;
+        }
+
+        .hero-card p {
+            font-size: 0.93rem;
+            line-height: 1.62;
+        }
+
+        .section-card {
+            border: 1px solid transparent;
+            border-radius: var(--radius-xl);
+            background: linear-gradient(180deg, rgba(13, 18, 33, 0.58), rgba(12, 17, 31, 0.46));
+            backdrop-filter: blur(8px);
+            padding: clamp(1rem, 3vw, 2rem);
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.012);
+        }
+
+        .section-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 9%;
+            right: 9%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(41, 217, 255, 0.03), transparent);
+        }
+
+        .section-title {
+            font-size: clamp(1.35rem, 2.7vw, 2.1rem);
+            margin-bottom: 0.6rem;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 1.15rem;
+            line-height: 1.7;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .chips {
+            display: flex;
+            gap: 0.45rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .chip {
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 0.4rem 0.75rem;
+            font-size: 0.78rem;
+            color: #c9d9ff;
+            background: rgba(127, 154, 214, 0.1);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 0.95rem;
+        }
+
+        .project {
+            border: 1px solid transparent;
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+            background: rgba(8, 13, 25, 0.55);
+            transition: 220ms ease;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+        }
+
+        .project:hover {
+            transform: translateY(-3px);
+            border-color: rgba(41, 217, 255, 0.42);
+        }
+
+        .project h3 {
+            margin-bottom: 0.42rem;
+        }
+
+        .project p {
+            color: var(--text-muted);
+            line-height: 1.62;
+            font-size: 0.92rem;
+        }
+
+        .timeline {
+            display: grid;
+            gap: 0.9rem;
+        }
+
+        .timeline-item {
+            border: 1px solid transparent;
+            border-radius: var(--radius-lg);
+            padding: 0.95rem;
+            background: rgba(15, 20, 35, 0.5);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+        }
+
+        .timeline-item strong {
+            display: inline-block;
+            margin-bottom: 0.28rem;
+            color: var(--neon-gold);
+        }
+
+        .timeline-item p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .newsletter {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 0.7rem;
+            align-items: center;
+        }
+
+        .email-input {
+            width: 100%;
+            padding: 0.78rem 0.95rem;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+            background: rgba(6, 10, 20, 0.8);
+            color: var(--text-main);
+            font: inherit;
+        }
+
+        .email-input::placeholder {
+            color: #7f8aa3;
+        }
+
+        .btn {
+            padding: 0.78rem 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(41, 217, 255, 0.45);
+            background: linear-gradient(130deg, rgba(41, 217, 255, 0.2), rgba(255, 92, 174, 0.16));
+            color: var(--text-main);
+            font-weight: 700;
+            cursor: pointer;
+            transition: 220ms ease;
+        }
+
+        .btn:hover,
+        .btn:focus-visible {
+            transform: translateY(-1px);
+            box-shadow: 0 0 0 3px rgba(41, 217, 255, 0.15);
+            outline: none;
+        }
+
+        .social-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 0.9rem;
+        }
+
+        .social {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.44rem;
+            text-decoration: none;
+            color: #dfe9ff;
+            border: 1px solid rgba(41, 217, 255, 0.18);
+            border-radius: 8px;
+            padding: 0.38rem 0.58rem;
+            background: rgba(127, 154, 214, 0.08);
+            font-size: 0.82rem;
+            line-height: 1;
+            transition: 180ms ease;
+            box-shadow: 0 0 14px rgba(41, 217, 255, 0.12);
+        }
+
+        .social:hover {
+            border-color: rgba(255, 92, 174, 0.5);
+            transform: translateY(-1px);
+            box-shadow: 0 0 18px rgba(255, 92, 174, 0.28), 0 0 26px rgba(41, 217, 255, 0.14);
+        }
+
+        .social svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+            opacity: 0.95;
+        }
+
+        .email-link {
+            margin-inline-start: 0.42rem;
+            border-color: rgba(255, 92, 174, 0.22);
+            box-shadow: 0 0 14px rgba(255, 92, 174, 0.18), 0 0 18px rgba(41, 217, 255, 0.08);
+        }
+
+        .contact {
+            margin-top: 1rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.32rem;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 560ms ease, transform 560ms ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        footer {
+            color: #8794b2;
+            text-align: center;
+            padding: 1.4rem 0 2.1rem;
+        }
+
+        @media (max-width: 980px) {
+            .hero,
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar {
+                border-radius: 20px;
+                top: 8px;
+            }
+
+            .hero-card {
+                max-height: 260px;
+            }
+        }
+
+        @media (max-width: 740px) {
+            .topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .menu {
+                width: 100%;
+            }
+
+            .newsletter {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
-<body class="smooth-scroll">
-    <nav class="fixed top-0 left-0 w-full glass p-4 flex justify-between">
-        <div>
-            <a href="#hero" class="px-4">Home</a>
-            <a href="#origin" class="px-4">Origin Story</a>
-            <a href="#projects" class="px-4">Projects</a>
-            <a href="#newsletter" class="px-4">Newsletter</a>
-        </div>
-        <div>
-            <button id="lang-toggle" class="bg-crimson text-white rounded p-2">EN</button>
-        </div>
-    </nav>
-    <section id="hero" class="h-screen flex items-center justify-center">
-        <div class="text-center">
-            <h1 class="text-5xl font-bold">Bridging Criminology and AI Governance</h1>
-            <p class="mt-4 text-xl">Our mission is to integrate criminological insights with advanced AI governance processes.</p>
-        </div>
-    </section>
-    <section id="origin" class="py-20 bg-gray-800">
-        <div class="container mx-auto">
-            <h2 class="text-3xl font-semibold text-center">Origin Story</h2>
-            <p class="mt-4">Transitioning from Criminology to Cybersecurity, I bring a unique perspective to the forefront of AI Law and Governance.</p>
-        </div>
-    </section>
-    <section id="projects" class="py-20">
-        <div class="container mx-auto">
-            <h2 class="text-3xl font-semibold text-center">Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <!-- Project items go here -->
+<body>
+    <div class="ambient-grid" aria-hidden="true"></div>
+    <div class="orb orb-cyan" aria-hidden="true"></div>
+    <div class="orb orb-pink" aria-hidden="true"></div>
+
+    <div class="wrapper">
+        <nav class="topbar reveal" aria-label="Main navigation">
+            <div class="brand">
+                <div class="brand-main">AI<span class="dot-cyan">.</span>CLOUD<span class="dot-pink">.</span>GRC</div>
+                <div class="brand-sub">INTEGRARY BY DESIGN</div>
             </div>
-        </div>
-    </section>
-    <section id="newsletter" class="py-20 bg-gray-800">
-        <div class="container mx-auto text-center">
-            <h2 class="text-3xl font-semibold">Subscribe to Research Weekly</h2>
-            <p>Get insights into AI Law and Forensic technology.</p>
-            <form class="mt-4">
-                <input type="email" placeholder="Your email" class="p-2 rounded" required>
-                <button type="submit" class="bg-crimson text-white p-2 rounded">Subscribe</button>
+            <div class="menu">
+                <a href="#about" data-i18n="nav_about">About</a>
+                <a href="#projects" data-i18n="nav_projects">Projects</a>
+                <a href="#story" data-i18n="nav_story">Story</a>
+                <a href="#journey" data-i18n="nav_journey">Journey</a>
+                <a href="#newsletter" data-i18n="nav_newsletter">Newsletter</a>
+                <a href="#find-me" data-i18n="nav_find_me">Find Me</a>
+            </div>
+            <div class="lang-controls" aria-label="Language selector">
+                <button class="lang-btn active" type="button" data-lang="en">EN</button>
+                <button class="lang-btn" type="button" data-lang="es">ES</button>
+                <button class="lang-btn" type="button" data-lang="ar">AR</button>
+            </div>
+        </nav>
+
+        <section class="hero reveal" id="home">
+            <div>
+                <p class="tag" data-i18n="hero_tag">Digital Portfolio</p>
+                <h1 data-i18n="hero_title">Turning real cyber exposure into purpose driven security growth.</h1>
+                <p data-i18n="hero_text">From lived experience to practical learning, this portfolio documents how I am building a future in cybersecurity, secure systems, and governance with integrity.</p>
+            </div>
+            <div class="hero-card">
+                <h3 data-i18n="statement_title">Personal Statement</h3>
+                <p data-i18n="statement_text">My interest in cybersecurity started with personal encounters with scams targeting people close to me and several attempts against me. This pushed me to understand digital threats, victimization, and prevention. Studying criminology and training through hands-on platforms showed me that effective security requires technical depth and human understanding together.</p>
+                <div class="chips">
+                    <span class="chip" data-i18n="chip_identity">Cyber + Human Lens</span>
+                    <span class="chip" data-i18n="chip_vision">Integrity by Design</span>
+                    <span class="chip" data-i18n="chip_impact">Applied Security Impact</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card reveal" id="about">
+            <h2 class="section-title" data-i18n="about_title">Who Am I</h2>
+            <p class="section-subtitle" data-i18n="about_text">I am Yasmine Gamot Chaer, a criminology graduate building a strong cybersecurity path. My core focus is understanding offender behavior, digital victimization, and designing safer digital systems that protect real people.</p>
+            <div class="chips">
+                <span class="chip" data-i18n="about_chip_1">Criminology Foundation</span>
+                <span class="chip" data-i18n="about_chip_2">Technical Labs</span>
+                <span class="chip" data-i18n="about_chip_3">Ethical Security Practice</span>
+            </div>
+        </section>
+
+        <section class="section-card reveal" id="projects">
+            <h2 class="section-title" data-i18n="projects_title">Projects</h2>
+            <p class="section-subtitle" data-i18n="projects_text">A focused project set shaped by your statement: practical training, secure development, and real community engagement.</p>
+            <div class="projects-grid">
+                <article class="project">
+                    <h3 data-i18n="project_1_title">ThoughtsPlus by Umfhero</h3>
+                    <p data-i18n="project_1_text">Contributed code and feature implementation, strengthening my software development workflow and secure coding awareness.</p>
+                </article>
+                <article class="project">
+                    <h3 data-i18n="project_2_title">Cyber Lab Journey</h3>
+                    <p data-i18n="project_2_text">Built practical skill through TryHackMe, HackTheBox, PicoCTF, and OverTheWire across Linux, network security, and web vulnerabilities.</p>
+                </article>
+                <article class="project">
+                    <h3 data-i18n="project_3_title">Security Community Immersion</h3>
+                    <p data-i18n="project_3_text">Attended OWASP and DevSecOps meetups to learn from professionals and align my growth with ethical, collaborative security practice.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section-card reveal" id="story">
+            <h2 class="section-title" data-i18n="story_title">My Story</h2>
+            <div class="grid-2">
+                <p class="section-subtitle" data-i18n="story_text_1">Personal exposure to online scams made cybersecurity deeply personal for me. Seeing how easily people can be targeted created a clear mission: understand threats and help prevent harm.</p>
+                <p class="section-subtitle" data-i18n="story_text_2">Criminology gave me analytical depth on behavior and victimization, while technical labs gave me practical confidence. Together, they shape how I approach cybersecurity: holistic, ethical, and impact focused.</p>
+            </div>
+        </section>
+
+        <section class="section-card reveal" id="journey">
+            <h2 class="section-title" data-i18n="journey_title">Journey</h2>
+            <p class="section-subtitle" data-i18n="journey_text">Milestones from my evolving path in cybersecurity and secure development.</p>
+            <div class="timeline">
+                <article class="timeline-item">
+                    <strong data-i18n="journey_1_date">Milestone 01</strong>
+                    <p data-i18n="journey_1_text">Explored cybercrime through criminology modules like Cybercrime and Digital Lives, connecting social impact with digital threats.</p>
+                </article>
+                <article class="timeline-item">
+                    <strong data-i18n="journey_2_date">Milestone 02</strong>
+                    <p data-i18n="journey_2_text">Completed practical labs and CTF-style challenges to build applied knowledge in Linux, networking, and web exploitation basics.</p>
+                </article>
+                <article class="timeline-item">
+                    <strong data-i18n="journey_3_date">Milestone 03</strong>
+                    <p data-i18n="journey_3_text">Joined OWASP and DevSecOps meetups to deepen community learning and align with real-world security practice.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section-card reveal" id="newsletter">
+            <h2 class="section-title" data-i18n="newsletter_title">Newsletter</h2>
+            <p class="section-subtitle" data-i18n="newsletter_text">Subscribe for journey updates, project drops, and security reflections. This sends a subscription email directly.</p>
+            <form class="newsletter" id="subscribe-form" action="#" method="post">
+                <label for="newsletter-email" style="position:absolute;left:-9999px;" data-i18n="newsletter_input_label">Your email</label>
+                <input id="newsletter-email" class="email-input" type="email" name="email" placeholder="Your email" data-i18n-placeholder="newsletter_input_placeholder" required />
+                <button class="btn" type="submit" data-i18n="newsletter_button">Subscribe</button>
             </form>
-        </div>
-    </section>
+        </section>
+
+        <section class="section-card reveal" id="find-me">
+            <h2 class="section-title" data-i18n="find_title">Where To Find Me</h2>
+            <p class="section-subtitle" data-i18n="find_text">Connect with me across platforms and feel free to reach out directly by email.</p>
+            <div class="social-list">
+                <a class="social" href="https://www.instagram.com/xsmin3/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5a4.25 4.25 0 0 0 4.25 4.25h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5a4.25 4.25 0 0 0-4.25-4.25h-8.5Zm9.13 2.13a1.12 1.12 0 1 1 0 2.24 1.12 1.12 0 0 1 0-2.24ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 1.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/></svg>
+                    <span data-i18n="social_instagram">Instagram</span>
+                </a>
+                <a class="social" href="https://www.linkedin.com/in/yasmine-gamot-chaer" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.25 3A2.25 2.25 0 1 1 3 5.25 2.25 2.25 0 0 1 5.25 3ZM3.75 8h3V21h-3V8ZM9 8h2.87v1.78h.04A3.15 3.15 0 0 1 14.74 8C17.53 8 18 9.84 18 12.23V21h-3v-7.72c0-1.84-.03-4.2-2.56-4.2-2.56 0-2.95 2-2.95 4.06V21h-3V8Z"/></svg>
+                    <span data-i18n="social_linkedin">LinkedIn</span>
+                </a>
+                <a class="social" href="https://github.com/Yaso-cyber" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.72c-2.78.6-3.37-1.18-3.37-1.18a2.64 2.64 0 0 0-1.11-1.45c-.9-.62.07-.6.07-.6a2.1 2.1 0 0 1 1.53 1.03 2.14 2.14 0 0 0 2.92.83 2.14 2.14 0 0 1 .64-1.34c-2.22-.25-4.55-1.12-4.55-4.95a3.86 3.86 0 0 1 1.03-2.69 3.58 3.58 0 0 1 .1-2.65s.84-.27 2.75 1.03a9.5 9.5 0 0 1 5 0c1.9-1.3 2.74-1.03 2.74-1.03a3.58 3.58 0 0 1 .1 2.65 3.86 3.86 0 0 1 1.03 2.7c0 3.84-2.33 4.69-4.56 4.94a2.4 2.4 0 0 1 .68 1.86v2.76c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+                    <span data-i18n="social_github">GitHub</span>
+                </a>
+            </div>
+            <p class="contact">
+                <span data-i18n="contact_label">Get in touch:</span>
+                <strong>
+                    <a class="social email-link" href="mailto:yasminelgamot@gmail.com" aria-label="Email">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.3-1.25L12 10.52 18.7 5.5H5.3Zm14.2 1.88-6.96 5.23a.9.9 0 0 1-1.08 0L4.5 7.38v9.87c0 .69.56 1.25 1.25 1.25h12.5c.69 0 1.25-.56 1.25-1.25V7.38Z"/></svg>
+                        <span data-i18n="contact_email">yasminelgamot@gmail.com</span>
+                    </a>
+                </strong>
+            </p>
+        </section>
+
+        <footer data-i18n="footer">Built as a seamless dark portfolio with subtle neon motion and multilingual support.</footer>
+    </div>
+
     <script>
-        const toggleButton = document.getElementById('lang-toggle');
-        toggleButton.addEventListener('click', function() {
-            if (toggleButton.textContent === 'EN') {
-                toggleButton.textContent = 'ES';
-            } else {
-                toggleButton.textContent = 'EN';
+        const translations = {
+            en: {
+                nav_about: "About",
+                nav_projects: "Projects",
+                nav_story: "Story",
+                nav_journey: "Journey",
+                nav_newsletter: "Newsletter",
+                nav_find_me: "Find Me",
+                hero_tag: "Digital Portfolio",
+                hero_title: "Turning real cyber exposure into purpose driven security growth.",
+                hero_text: "From lived experience to practical learning, this portfolio documents how I am building a future in cybersecurity, secure systems, and governance with integrity.",
+                statement_title: "Personal Statement",
+                statement_text: "My interest in cybersecurity started with personal encounters with scams targeting people close to me and several attempts against me. This pushed me to understand digital threats, victimization, and prevention. Studying criminology and training through hands-on platforms showed me that effective security requires technical depth and human understanding together.",
+                chip_identity: "Cyber + Human Lens",
+                chip_vision: "Integrity by Design",
+                chip_impact: "Applied Security Impact",
+                about_title: "Who Am I",
+                about_text: "I am Yasmine Gamot Chaer, a criminology graduate building a strong cybersecurity path. My core focus is understanding offender behavior, digital victimization, and designing safer digital systems that protect real people.",
+                about_chip_1: "Criminology Foundation",
+                about_chip_2: "Technical Labs",
+                about_chip_3: "Ethical Security Practice",
+                projects_title: "Projects",
+                projects_text: "A focused project set shaped by your statement: practical training, secure development, and real community engagement.",
+                project_1_title: "ThoughtsPlus by Umfhero",
+                project_1_text: "Contributed code and feature implementation, strengthening my software development workflow and secure coding awareness.",
+                project_2_title: "Cyber Lab Journey",
+                project_2_text: "Built practical skill through TryHackMe, HackTheBox, PicoCTF, and OverTheWire across Linux, network security, and web vulnerabilities.",
+                project_3_title: "Security Community Immersion",
+                project_3_text: "Attended OWASP and DevSecOps meetups to learn from professionals and align my growth with ethical, collaborative security practice.",
+                story_title: "My Story",
+                story_text_1: "Personal exposure to online scams made cybersecurity deeply personal for me. Seeing how easily people can be targeted created a clear mission: understand threats and help prevent harm.",
+                story_text_2: "Criminology gave me analytical depth on behavior and victimization, while technical labs gave me practical confidence. Together, they shape how I approach cybersecurity: holistic, ethical, and impact focused.",
+                journey_title: "Journey",
+                journey_text: "Milestones from my evolving path in cybersecurity and secure development.",
+                journey_1_date: "Milestone 01",
+                journey_1_text: "Explored cybercrime through criminology modules like Cybercrime and Digital Lives, connecting social impact with digital threats.",
+                journey_2_date: "Milestone 02",
+                journey_2_text: "Completed practical labs and CTF-style challenges to build applied knowledge in Linux, networking, and web exploitation basics.",
+                journey_3_date: "Milestone 03",
+                journey_3_text: "Joined OWASP and DevSecOps meetups to deepen community learning and align with real-world security practice.",
+                newsletter_title: "Newsletter",
+                newsletter_text: "Subscribe for journey updates, project drops, and security reflections. This sends a subscription email directly.",
+                newsletter_input_label: "Your email",
+                newsletter_input_placeholder: "Your email",
+                newsletter_button: "Subscribe",
+                find_title: "Where To Find Me",
+                find_text: "Connect with me across platforms and feel free to reach out directly by email.",
+                social_instagram: "Instagram",
+                social_linkedin: "LinkedIn",
+                social_github: "GitHub",
+                contact_label: "Get in touch:",
+                contact_email: "yasminelgamot@gmail.com",
+                footer: "Built as a seamless dark portfolio with subtle neon motion and multilingual support."
+            },
+            es: {
+                nav_about: "Sobre mi",
+                nav_projects: "Proyectos",
+                nav_story: "Historia",
+                nav_journey: "Trayectoria",
+                nav_newsletter: "Boletin",
+                nav_find_me: "Encontrarme",
+                hero_tag: "Portafolio Digital",
+                hero_title: "Convirtiendo experiencia real en crecimiento de ciberseguridad con proposito.",
+                hero_text: "Desde experiencias personales hasta practica tecnica, este portafolio muestra como construyo mi futuro en ciberseguridad y gobernanza segura.",
+                statement_title: "Declaracion Personal",
+                statement_text: "Mi interes por la ciberseguridad comenzo por experiencias cercanas con estafas. Eso me llevo a comprender amenazas digitales, victimizacion y prevencion con una mirada humana y tecnica.",
+                chip_identity: "Vision Humana + Tecnica",
+                chip_vision: "Integridad por Diseno",
+                chip_impact: "Impacto Real",
+                about_title: "Quien Soy",
+                about_text: "Soy Yasmine Gamot Chaer, graduada en criminologia enfocada en construir un camino fuerte en ciberseguridad para proteger personas y sistemas.",
+                about_chip_1: "Base en Criminologia",
+                about_chip_2: "Laboratorios Tecnicos",
+                about_chip_3: "Practica Etica",
+                projects_title: "Proyectos",
+                projects_text: "Un conjunto de proyectos enfocado en practica real, desarrollo seguro y aprendizaje en comunidad.",
+                project_1_title: "ThoughtsPlus por Umfhero",
+                project_1_text: "Contribui con codigo e implementacion de funciones, fortaleciendo mi flujo de desarrollo y seguridad en codigo.",
+                project_2_title: "Trayectoria de Laboratorios",
+                project_2_text: "Entrene en TryHackMe, HackTheBox, PicoCTF y OverTheWire con Linux, redes y vulnerabilidades web.",
+                project_3_title: "Inmersion en Comunidad",
+                project_3_text: "Participe en encuentros OWASP y DevSecOps para aprender practicas reales y colaborativas.",
+                story_title: "Mi Historia",
+                story_text_1: "Ver estafas digitales de cerca hizo que la ciberseguridad fuera algo personal y urgente para mi.",
+                story_text_2: "La criminologia me dio analisis social y los laboratorios me dieron confianza tecnica. Juntos guian mi enfoque integral.",
+                journey_title: "Trayectoria",
+                journey_text: "Hitos clave en mi crecimiento dentro de ciberseguridad y desarrollo seguro.",
+                journey_1_date: "Hito 01",
+                journey_1_text: "Estudie cibercrimen y vidas digitales para conectar impacto social y amenazas tecnologicas.",
+                journey_2_date: "Hito 02",
+                journey_2_text: "Complete laboratorios practicos y retos tipo CTF para reforzar habilidades tecnicas aplicadas.",
+                journey_3_date: "Hito 03",
+                journey_3_text: "Asisti a meetups de OWASP y DevSecOps para aprender del sector y crecer con comunidad.",
+                newsletter_title: "Boletin",
+                newsletter_text: "Suscribete para recibir avances de mi trayectoria, proyectos y reflexiones de seguridad.",
+                newsletter_input_label: "Tu correo",
+                newsletter_input_placeholder: "Tu correo",
+                newsletter_button: "Suscribirme",
+                find_title: "Donde Encontrarme",
+                find_text: "Conecta conmigo en redes y contactame directamente por correo.",
+                social_instagram: "Instagram",
+                social_linkedin: "LinkedIn",
+                social_github: "GitHub",
+                contact_label: "Contacto:",
+                contact_email: "yasminelgamot@gmail.com",
+                footer: "Portafolio oscuro fluido con movimiento neon sutil y soporte multilenguaje."
+            },
+            ar: {
+                nav_about: "من انا",
+                nav_projects: "المشاريع",
+                nav_story: "القصة",
+                nav_journey: "الرحلة",
+                nav_newsletter: "النشرة",
+                nav_find_me: "اين تجدني",
+                hero_tag: "ملف رقمي",
+                hero_title: "احول التجربة الواقعية الى نمو هادف في الامن السيبراني.",
+                hero_text: "من التجربة الشخصية الى التعلم العملي، يوثق هذا الموقع كيف ابني مستقبلي في الامن السيبراني والانظمة الامنة والحوكمة.",
+                statement_title: "البيان الشخصي",
+                statement_text: "بدأ اهتمامي بالامن السيبراني من تجارب شخصية مع محاولات الاحتيال. هذا دفعني لفهم التهديدات الرقمية وحماية الافراد من الاستهداف.",
+                chip_identity: "منظور تقني وانساني",
+                chip_vision: "النزاهة بالتصميم",
+                chip_impact: "اثر امني تطبيقي",
+                about_title: "من انا",
+                about_text: "انا ياسمين غامط شاعر، خريجة علم الجريمة وابني مسارا قويا في الامن السيبراني لحماية الناس والانظمة.",
+                about_chip_1: "اساس في علم الجريمة",
+                about_chip_2: "تدريب عملي",
+                about_chip_3: "ممارسة اخلاقية",
+                projects_title: "المشاريع",
+                projects_text: "مجموعة مشاريع تركز على التدريب العملي والتطوير الامن والتعلم المجتمعي.",
+                project_1_title: "ThoughtsPlus من Umfhero",
+                project_1_text: "ساهمت في البرمجة وتنفيذ ميزات جديدة مما عزز فهمي للتطوير والممارسات الامنة.",
+                project_2_title: "رحلة المختبرات",
+                project_2_text: "تدربت عبر TryHackMe و HackTheBox و PicoCTF و OverTheWire في لينكس والشبكات وثغرات الويب.",
+                project_3_title: "انخراط مجتمعي امني",
+                project_3_text: "حضرت لقاءات OWASP و DevSecOps للتعلم من المختصين والواقع المهني.",
+                story_title: "قصتي",
+                story_text_1: "التعرض للاحتيال الرقمي بشكل قريب جعل الامن السيبراني قضية شخصية بالنسبة لي.",
+                story_text_2: "علم الجريمة منحني بعدا تحليليا والساحات العملية منحتني ثقة تقنية. الجمع بينهما يصنع نهجي المتوازن.",
+                journey_title: "الرحلة",
+                journey_text: "محطات رئيسية في تطوري داخل الامن السيبراني والتطوير الامن.",
+                journey_1_date: "المحطة 01",
+                journey_1_text: "درست الجرائم السيبرانية والحياة الرقمية لفهم تقاطع السلوك البشري مع التهديدات التقنية.",
+                journey_2_date: "المحطة 02",
+                journey_2_text: "اكملت مختبرات عملية وتحديات CTF لبناء مهارات تطبيقية في لينكس والشبكات والويب.",
+                journey_3_date: "المحطة 03",
+                journey_3_text: "شاركت في لقاءات OWASP و DevSecOps لتعميق التعلم وربط المعرفة بالممارسة الواقعية.",
+                newsletter_title: "النشرة",
+                newsletter_text: "اشتركي لتصلك تحديثات الرحلة واطلاقات المشاريع وتاملات امنية.",
+                newsletter_input_label: "بريدك الالكتروني",
+                newsletter_input_placeholder: "بريدك الالكتروني",
+                newsletter_button: "اشتراك",
+                find_title: "اين تجدني",
+                find_text: "يمكنك التواصل معي عبر المنصات التالية او البريد الالكتروني مباشرة.",
+                social_instagram: "انستغرام",
+                social_linkedin: "لينكدان",
+                social_github: "جيت هب",
+                contact_label: "للتواصل:",
+                contact_email: "yasminelgamot@gmail.com",
+                footer: "تصميم داكن سلس مع حركة نيون هادئة ودعم ثلاث لغات."
             }
+        };
+
+        const langButtons = document.querySelectorAll(".lang-btn");
+        const translatable = document.querySelectorAll("[data-i18n]");
+        const translatablePlaceholders = document.querySelectorAll("[data-i18n-placeholder]");
+
+        function applyLanguage(lang) {
+            const dict = translations[lang] || translations.en;
+
+            translatable.forEach((node) => {
+                const key = node.getAttribute("data-i18n");
+                if (dict[key]) {
+                    node.textContent = dict[key];
+                }
+            });
+
+            translatablePlaceholders.forEach((node) => {
+                const key = node.getAttribute("data-i18n-placeholder");
+                if (dict[key]) {
+                    node.setAttribute("placeholder", dict[key]);
+                }
+            });
+
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+
+            langButtons.forEach((btn) => {
+                btn.classList.toggle("active", btn.getAttribute("data-lang") === lang);
+            });
+        }
+
+        langButtons.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                applyLanguage(btn.getAttribute("data-lang"));
+            });
         });
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.14 }
+        );
+
+        document.querySelectorAll(".reveal").forEach((node) => observer.observe(node));
+
+        const subscribeForm = document.getElementById("subscribe-form");
+        subscribeForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const input = document.getElementById("newsletter-email");
+            const value = input.value.trim();
+            if (!value) {
+                return;
+            }
+
+            const subject = encodeURIComponent("Newsletter subscription request");
+            const body = encodeURIComponent(`Please subscribe this email to updates: ${value}`);
+            window.location.href = `mailto:yasminelgamot@gmail.com?subject=${subject}&body=${body}`;
+            input.value = "";
+        });
+
+        applyLanguage("en");
     </script>
 </body>
 </html>
